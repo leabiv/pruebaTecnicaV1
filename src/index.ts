@@ -1,5 +1,7 @@
 import express from 'express'
-import indexRoutes from './routers/admin.router'
+import adminRoutes from './routers/admin.router'
+import socioRoutes from './routers/socios.router'
+import clientRoutes from './routers/socios.router'
 
 const app = express();
 const port = 4000;
@@ -11,7 +13,9 @@ app.get('/', (_req, res) => {
   res.send('Hola mi sevidor');
 })
 
-app.use('/app/admin',indexRoutes);
+app.use('/app/admin',adminRoutes);
+app.use('/app/socio',socioRoutes);
+app.use('/app/client',clientRoutes);
 
 app.listen(port, () => {
     console.log(`Mi port ${port}`)
