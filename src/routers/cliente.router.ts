@@ -11,7 +11,7 @@ router.post('/paking/:idS/', async (req, res, next) => {
     const { idS } = req.params;
     const bodyVehiculo = req.body;
     const regEntrada = service.registarEntrada(Number(idS), bodyVehiculo);
-    res.json(regEntrada)
+    res.json({mensaje: 'Registro Generado'})
   } catch (error) {
     next(error)
   }
@@ -46,3 +46,5 @@ router.get('/vehicle/:idS/parking/:idP', async (req, res, next) => {
     next(error)
   }
 })
+
+export default router;

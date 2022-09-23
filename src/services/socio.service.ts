@@ -55,7 +55,7 @@ export class SocioService {
    * @returns :QueryResult listado de parqueadero
    */
   async listarParqueadero(idSocio: number) {
-    const result1 = await this.pool.query("SELECT v.nombre, p.nombre FROM parqueadero as p join socios as s on p.id_socio = s.id join vehiculo as v on p.id = v.id_parqueadero where s.id = $1", [idSocio]);
+    const result1 = await this.pool.query("SELECT v.nombre as carro, p.nombre FROM parqueadero as p join socios as s on p.id_socio = s.id join vehiculo as v on p.id = v.id_parqueadero where s.id = $1", [idSocio]);
     if (result1.rowCount == 0) {
       throw new Error('Error con el listado de parqueadero del socio')
     }
@@ -70,7 +70,7 @@ export class SocioService {
    */
   async destalleParqueadero(idSocio: number, idVehiculo: number) {
     const result1 = await this.pool.query("SELECT v.nombre, v.placa, v.fechaingreso FROM parqueadero as p join socios as s on p.id_socio = s.id join vehiculo as v on p.id = v.id_parqueadero where v.id = $1 and s.id=$2", [idVehiculo, idSocio]);
-    if(result1.rowCount==0){
+    if (result1.rowCount == 0) {
       throw new Error('Vehiculo no encontrado')
     }
     return result1.rows;
@@ -101,7 +101,7 @@ export class SocioService {
    * @returns : QueryResult
    */
   async usandoParking() {
-    const query = ("SELECT count(v.id_cliente) FROM vehiculo as v where v.id_cliente IS NOT NULL");
+    const query = ("SELECT count(v.id_cliente) as cantidad FROM vehiculo as v where v.id_cliente IS NOT NULL");
     const result = await this.pool.query(query);
     return result.rows;
   }
@@ -111,7 +111,7 @@ export class SocioService {
    * @returns : QueryResult
    */
   async notUsandoParking() {
-    const query = "SELECT c.nombre FROM clientes as c join vehiculo as v on c.id = v.id_cliente where v.id_parqueadero is null";
+    const query = "SELECT COUNT(c.id) as cantidad FROM clientes as c LEFT join vehiculo as v on c.id = v.id_cliente where v.id_cliente is null";
     const result = await this.pool.query(query);
     return result.rows;
   }
@@ -144,8 +144,6 @@ export class SocioService {
     }
     return result.rows;
   }
-
-
 
   //obtener el promedio de uso de un parqueadero por rango de fecha
 

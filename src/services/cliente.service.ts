@@ -13,17 +13,16 @@ export class ClienteService {
 
   /**
    *
-   * @param idParking
+   * @param idSocio
    * @param dataVehiculo
    * @returns
    */
   async registarEntrada(idSocio: number, dataVehiculo: Vehiculo) {
-    //const query1 = await this.pool.query("SELECT id FROM vehivulo where placa = $1",[dataVehiculo.id]);
     const query2 = await this.pool.query("SELECT id FROM socios where id = $1", [idSocio]);
-    const query3 = await this.pool.query("SELECT placa FROM socios as s join parqueadero as p on s.id = p.id_socio join vehiculo as v on v.id_parqueadero = p.id where s.id=$1 AND v.placa = $2",[idSocio, dataVehiculo.placa])
+    const query3 = await this.pool.query("SELECT placa FROM vehiculo as v  where v.placa = $1",[dataVehiculo.placa])
     if (query2.rowCount > 0 && query3.rowCount == 0) {
-      const query = "INSERT INTO vehiculo (nombre, placa, fechaingreso, id_parqueadero) VALUES ($1, $2, $3, $4)";
-      const result1 = await this.pool.query(query, [dataVehiculo.nombre, dataVehiculo.placa, dataVehiculo.fechaingreso, dataVehiculo.id_parking]);
+      const query = "INSERT INTO vehiculo (nombre, placa, fechaingreso, id_parqueadero, id_cliente) VALUES ($1, $2, $3, $4, $5)";
+      const result1 = await this.pool.query(query, [dataVehiculo.nombre, dataVehiculo.placa, dataVehiculo.fechaingreso, dataVehiculo.id_parking, dataVehiculo.id_cliente]);
       return result1.rows;
     }
     return query2.rowCount;

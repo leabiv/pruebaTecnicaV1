@@ -4,7 +4,7 @@ dotenv.config();
 import express from 'express'
 import adminRoutes from './routers/admin.router'
 import socioRoutes from './routers/socios.router'
-import clientRoutes from './routers/socios.router'
+import clienteService from './routers/cliente.router'
 import auth from './routers/auth.router';
 
 const app = express();
@@ -20,7 +20,7 @@ app.get('/', (_req, res) => {
 //app.use('/app/', auth);
 app.use('/app/admin',adminRoutes);
 app.use('/app/socio',socioRoutes);
-app.use('/app/client',clientRoutes);
+app.use('/app/client',clienteService);
 
 app.listen(port, () => {
     console.log(`Mi port ${port}`)
