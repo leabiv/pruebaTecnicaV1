@@ -20,7 +20,7 @@ export class AdminService {
   }
 
   /**
-   *
+   * Funcion que permite listar los usuarios tipo socio
    * @returns
    */
   async findUsers() {
@@ -57,11 +57,11 @@ export class AdminService {
    */
   async asociarCliente(idSocio: number, dataCliente: Clientes) {
     const result = await this.pool.query("SELECT id FROM socios WHERE id=$1", [idSocio]);
-    if (result.rowCount > 0) {
-      const result1 = await this.pool.query("INSERT INTO socio_cliente (id_socio, id_cliente) VALUES ($1, $2)", [idSocio, dataCliente.id]);
-      return result1.rowCount;
+    if (result.rowCount == 0) {
+      throw new Error('No se pudo asociar el cliente')
     }
-    return result.rowCount;
+    const result1 = await this.pool.query("INSERT INTO socio_cliente (id_socio, id_cliente) VALUES ($1, $2)", [idSocio, dataCliente.id]);
+    return result1.rowCount;
   }
 
   //debe poder hacer un CRUD de parqueaderos.
@@ -69,7 +69,7 @@ export class AdminService {
    *
    * @returns
    */
-   async listarParking() {
+  async listarParking() {
     const query = "SELECT * FROM parqueadero";
     const result = await this.pool.query(query);
     return result.rows;
@@ -81,8 +81,11 @@ export class AdminService {
    * @returns
    */
   async crearParking(dataParking: Parqueadero) {
-    const query = "INSERT INTO parqueadero (nombre) VALUES ($1)";
-    const result = await this.pool.query(query, [dataParking.nombre]);
+    const query2 = await this.pool.query("SELECT * FROM parqueadero where nombre = $1", [dataParking.nombre]);
+    if (query2.rowCount > 0) {
+      throw new Error('No se pudo crear el parqueadero, ya esta creado')
+    }
+    const result = await this.pool.query("INSERT INTO parqueadero (nombre) VALUES ($1)", [dataParking.nombre]);
     return result.rowCount;
   }
 
@@ -94,12 +97,12 @@ export class AdminService {
    */
   async ActualizarParking(id: number, dataParking: Parqueadero) {
     const queryParking = await this.pool.query("SELECT id FROM parqueadero WHERE id = $1", [id]);
-    if (queryParking.rowCount > 0) {
-      const query = "UPDATE parqueadero SET nombre = $1 WHERE id = $2";
-      const result = await this.pool.query(query, [dataParking.nombre, id]);
-      return result.rowCount;
+    if (queryParking.rowCount == 0) {
+      throw new Error('Parqueadero no encontrado, no se puedo actualizar')
     }
-    return queryParking.rowCount;
+    const query = "UPDATE parqueadero SET nombre = $1 WHERE id = $2";
+    const result = await this.pool.query(query, [dataParking.nombre, id]);
+    return result.rowCount;
   }
 
   /**
@@ -110,6 +113,9 @@ export class AdminService {
   async findOneParking(id: number) {
     const query = "SELECT * FROM parqueadero WHERE id = $1";
     const result = await this.pool.query(query, [id]);
+    if (result.rowCount == 0) {
+      throw new Error('Parqueadero no encontrado')
+    }
     return result.rows;
   }
 
@@ -120,11 +126,11 @@ export class AdminService {
    */
   async eliminarParking(idParking: number) {
     const queryParking = await this.pool.query("SELECT id FROM parqueadero WHERE id = $1", [idParking]);
-    if (queryParking.rowCount > 0) {
-      const result = await this.pool.query("DELETE FROM parqueadero WHERE id=$1", [idParking]);
-      return result.rowCount;
+    if (queryParking.rowCount == 0) {
+      throw new Error('Parqueadero no encontrado')
     }
-    return queryParking.rowCount;
+    const result = await this.pool.query("DELETE FROM parqueadero WHERE id=$1", [idParking]);
+    return result.rowCount;
   }
 
   //puede asociar parqueaderos a socios. Siempre y cuando el parqueadero no este asociado a ningún otro socio
@@ -135,9 +141,9 @@ export class AdminService {
    * @returns
    */
   async asociarParking(idSocio: number, idParking: Parqueadero) {
-      const query = "UPDATE parqueadero SET id_socio = $1 WHERE id = $2";
-      const result = await this.pool.query(query, [idParking.id, idSocio]);
-      return result.rows;
+    const query = "UPDATE parqueadero SET id_socio = $1 WHERE id = $2 AND id_socio is null";
+    const result = await this.pool.query(query, [idSocio, idParking.id]);
+    return result.rows;
   }
 
   //puede revisar listado/detalle de vehículos en el parqueadero
@@ -156,9 +162,12 @@ export class AdminService {
    * @param idVehiculo
    * @returns
    */
-  async findOneVehiculos(idVehiculo: number) {
-    const query = "SELECT v.id, v.nombre, v.fechaingreso, s.usuario, s.correo FROM socios as s join parqueadero as p on s.id = p.id join vehiculo as v on p.id_vehiculo = v.id WHERE v.id=$1";
+  async findOneVehiculos(idVehiculo: string) {
+    const query = "SELECT v.id, v.nombre as carro, v.fechaingreso, s.nombre, s.correo FROM socios as s join parqueadero as p on s.id = p.id join vehiculo as v on p.id = v.id WHERE v.nombre=$1";
     const result = await this.pool.query(query, [idVehiculo]);
+    if (result.rowCount == 0) {
+      throw new Error('Vehiculo no encontrado')
+    }
     return result.rows;
   }
 
@@ -167,9 +176,26 @@ export class AdminService {
    * @param idSocio
    * @returns
    */
-  async findOneVehiculosSocio(idSocio: number) {
-    const query = "SELECT v.id, v.nombre, v.fechaingreso, s.usuario, s.correo FROM socios as s join parqueadero as p on s.id = p.id join vehiculo as v on p.id_vehiculo = v.id WHERE s.id=$1";
+  async findVehiculosSocio(idSocio: number) {
+    const query = "SELECT v.id, v.nombre as carro, v.fechaingreso, s.nombre, s.correo FROM socios as s join parqueadero as p on s.id = p.id join vehiculo as v on p.id = v.id WHERE p.id_socio=$1";
     const result = await this.pool.query(query, [idSocio]);
+    if (result.rowCount == 0) {
+      throw new Error('El socio no tiene vehiculos')
+    }
+    return result.rows;
+  }
+
+  /**
+   * Funcion que permite buscar cuantos clientes existen por socio
+   * @param id
+   * @returns
+   */
+  async clienExiSocio(id: number) {
+    const query = ("select count(id_cliente)as cantidad from socio_cliente as sc join socios as s on sc.id_socio = s.id where s.id = $1 group by sc.id_socio");
+    const result = await this.pool.query(query, [id]);
+    if (result.rowCount == 0) {
+      throw new Error('El socio no tiene ningun cliente asociado')
+    }
     return result.rows;
   }
 }

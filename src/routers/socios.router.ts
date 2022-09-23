@@ -46,4 +46,55 @@ router.get('/:id/vehicles/:idV', async (req, res, next) => {
     next(error)
   }
 })
+
+router.get('/parking/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const listparking = await service.listRegis(Number(id));
+    res.json(listparking)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.get('/t-parking/old', async (req, res, next) => {
+  try {
+    console.log('-------Algo')
+    const listparking = await service.verificarVehiculosPar();
+
+    res.json(listparking)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.get('/t-parking/new', async (req, res, next) => {
+  try {
+    const listparking = await service.verifiVehiParNuevo();
+    res.json(listparking)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.get('/t-parking/usandoPa/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const list = await service.listadoVehiculoCliente(Number(id));
+    res.json(list)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.get('/t-parking/usandoPa/:idC/vehicle/:placa', async (req, res, next) => {
+  try {
+    const { idC, placa } = req.params;
+    const list = await service.listadoVehiculoDetalle(Number(idC), placa);
+    res.json(list)
+  } catch (error) {
+    next(error)
+  }
+})
+
 export default router;

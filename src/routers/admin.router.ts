@@ -1,6 +1,4 @@
 import { Router } from 'express'
-import { pool } from '../conexion';
-import { QueryResult } from 'pg';
 import { AdminService } from '../services/admin.service';
 
 const router = Router();
@@ -10,7 +8,7 @@ const service = new AdminService()
 router.get('/users', async (req, res, next) => {
   try {
     const usuarios = await service.findUsers()
-    res.json(usuarios)
+    res.status(200).json(usuarios)
   } catch (error) {
     next(error)
   }
@@ -20,7 +18,7 @@ router.post('/users', async (req, res, next) => {
   try {
     const body = req.body;
     const newUser = await service.createUser(body);
-    res.status(201).json(newUser)
+    res.status(201).json({mensaje:'Usuario registrado con exito'})
   } catch (error) {
     next(error)
   }
@@ -31,7 +29,7 @@ router.post('/users/:id', async (req, res, next) => {
     const { id } = req.params;
     const body = req.body;
     const newUser = await service.asociarCliente(Number(id), body);
-    res.status(201).json(newUser)
+    res.status(201).json({mensaje: 'Cliente asociado con exito'})
   } catch (error) {
     next(error)
   }
@@ -51,7 +49,7 @@ router.post('/parking', async (req, res, next) => {
   try {
     const body = req.body;
     const parking = await service.crearParking(body)
-    res.json(parking)
+    res.status(200).json({mensaje:'Parqueadero creado con exito'})
   } catch (error) {
     next(error)
   }
@@ -62,7 +60,7 @@ router.put('/parking/:id', async (req, res, next) => {
     const { id } = req.params;
     const body = req.body;
     const parking = await service.ActualizarParking(Number(id), body)
-    res.json(parking)
+    res.status(200).json({mensaje:'Actualizacion exitosa'})
   } catch (error) {
     next(error)
   }
@@ -82,19 +80,19 @@ router.delete('/parking/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     const parking = await service.eliminarParking(Number(id))
-    res.json(parking)
+    res.status(200).json({mensaje: 'Eliminacion Exitosa'})
   } catch (error) {
     next(error)
   }
 })
 
 //---------------------Metodos async de Asociar parqueaderos a Socios------------------//
-router.put('/users/parking/:id', async (req, res, next) => {
+router.put('/users/:id/parking', async (req, res, next) => {
   try {
     const { id } = req.params;
     const body = req.body;
     const asocParking = await service.asociarParking(Number(id), body);
-    res.status(201).json(asocParking)
+    res.status(201).json({mensaje: 'Parqueadero Asociado exitosamente'})
   } catch (error) {
     next(error)
   }
@@ -110,16 +108,34 @@ router.get('/vehicle', async (req, res, next) => {
   }
 });
 
-router.get('/vehicle/:id', async (req, res, next) => {
+router.get('/vehicle/:nombre', async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const vehiculos = await service.findOneVehiculos(Number(id))
+    const { nombre } = req.params;
+    const vehiculos = await service.findOneVehiculos(nombre)
     res.json(vehiculos)
   } catch (error) {
     next(error)
   }
 });
 
+router.get('/vehicle/:id/socio', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const vehiculos = await service.findVehiculosSocio(Number(id))
+    res.json(vehiculos)
+  } catch (error) {
+    next(error)
+  }
+});
 
+router.get('/socio/:id/user', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const vehiculos = await service.clienExiSocio(Number(id))
+    res.json(vehiculos)
+  } catch (error) {
+    next(error)
+  }
+});
 
 export default router;
