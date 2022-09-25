@@ -19,7 +19,7 @@ export class ClienteService {
    */
   async registarEntrada(idSocio: number, dataVehiculo: Vehiculo) {
     const query2 = await this.pool.query("SELECT id FROM socios where id = $1", [idSocio]);
-    const query3 = await this.pool.query("SELECT placa FROM vehiculo as v  where v.placa = $1",[dataVehiculo.placa])
+    const query3 = await this.pool.query("SELECT placa FROM vehiculo as v  where v.placa = $1", [dataVehiculo.placa])
     if (query2.rowCount > 0 && query3.rowCount == 0) {
       const query = "INSERT INTO vehiculo (nombre, placa, fechaingreso, id_parqueadero, id_cliente) VALUES ($1, $2, $3, $4, $5)";
       const result1 = await this.pool.query(query, [dataVehiculo.nombre, dataVehiculo.placa, dataVehiculo.fechaingreso, dataVehiculo.id_parking, dataVehiculo.id_cliente]);
@@ -44,18 +44,21 @@ export class ClienteService {
     return query1.rowCount
   }
 
-  /**
-   *
-   * @returns
-   */
+  //------------------------Revision de Metodos-------------------------//
   async listadoVehiculo() {
     const query2 = await this.pool.query("SELECT * from vehiculo");
+    if(query2.rowCount==0){
+      throw new Error("No hay vehiculos");
+    }
     return query2.rows;
   }
 
-  async listadoUnVehiculo(idSocio: number, idParking: number) {
-    const query2 = ("select v.nombre, v.placa, v.fechaingreso, v.id_parqueadero from socios as s inner vehiculo as v where s.id_parking = $1");
-    const resul = await this.pool.query(query2, [idSocio, idParking])
+  async listadoUnVehiculo(idParking: number) {
+    const query2 = ("select v.nombre, v.placa, v.fechaingreso, s.nombre as socio from socios as s join parqueadero as p on s.id = p.id_socio join vehiculo as v on v.id_parqueadero = p.id where p.id = $1");
+    const resul = await this.pool.query(query2, [idParking])
+    if(resul.rowCount==0){
+      throw new Error("No hay ningun vehiculo en el parqueadero por socio")
+    }
     return resul.rows;
   }
 
