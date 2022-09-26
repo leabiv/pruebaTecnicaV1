@@ -12,7 +12,7 @@ router.post('/signin', async (req, res) => {
   try {
     const { correo, contrasena } = req.body;
     const finSocio = await service.findOneSocio(correo,contrasena);
-    const token: string = jwt.sign({ _id: finSocio.forEach(elem => elem.id) }, process.env.TOKEN_SECRET || 'tokentest', { expiresIn: 300 })
+    const token: string = jwt.sign({ finSocio }, process.env.TOKEN_SECRET || 'tokentest', { expiresIn: 300 })
     res.header('auth-token', token).json(finSocio)
   } catch (error: any) {
     res.status(400).send(error.message)

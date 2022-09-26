@@ -7,6 +7,7 @@ interface IPayload{
   exp: number;
 }
 
+
 export const TokenValidation = (req: Request, res:Response, next:NextFunction)=>{
   const token = req.header('auth-token');
   if(!token){
@@ -17,3 +18,4 @@ export const TokenValidation = (req: Request, res:Response, next:NextFunction)=>
   //req.userId = payload._id;
   next();
 }
+

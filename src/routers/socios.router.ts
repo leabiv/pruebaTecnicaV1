@@ -10,7 +10,7 @@ router.post('/client', async (req, res, next) => {
   try {
     const body = req.body;
     const newCliente = await service.crearCliente(body);
-    res.status(200).json({mensaje: 'Registro exitoso del cliente'})
+    res.status(200).json({ mensaje: 'Registro exitoso del cliente' })
   } catch (error) {
     next(error)
   }
@@ -21,7 +21,7 @@ router.post('/:id/client', async (req, res, next) => {
     const { id } = req.params;
     const bodyC = req.body
     const asociCliente = await service.asociarClienteS(Number(id), bodyC);
-    res.status(200).json({mensaje: "Cliente asociado exitosamente"});
+    res.status(200).json({ mensaje: "Cliente asociado exitosamente" });
   } catch (error) {
     next(error)
   }
@@ -103,7 +103,17 @@ router.get('/t-parking/usandoPa/:idC/vehicle/:placa', async (req, res, next) => 
   }
 })
 
-//-------------------------------VERIFICACION DE METODO------------------------------------------//
+router.get('/t-parking/:idP/promedio', async (req, res, next) => {
+  try {
+    const { idP } = req.params;
+    const body = req.body;
+    const list = await service.promedioRangoFecha(Number(idP), body);
+    res.json(list)
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.get('/parking/:id', async (req, res, next) => {
   try {
     const { id } = req.params;

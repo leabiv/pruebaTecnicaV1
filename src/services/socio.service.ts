@@ -1,5 +1,6 @@
 import { pool } from '../conexion'
 import { Clientes } from '../modules/clientes.models';
+import { Historial } from '../modules/historial.models';
 import { Parqueadero } from '../modules/parqueadero.models';
 import { Socios } from '../modules/socios.models';
 import { User } from '../modules/users.models';
@@ -145,12 +146,25 @@ export class SocioService {
     return result.rows;
   }
 
-  //obtener el promedio de uso de un parqueadero por rango de fecha
+  /**
+   *  Funcion que permite obtener el promedio de un parqueadero por rango de fecha
+   * @param idParking : number id_Parqueadero
+   * @param fecha : string fecha 'YYYY-MM-DD'
+   * @returns : QueryResult
+   */
+  async promedioRangoFecha(idParking:number, bodyHisto:Historial){
+    const query = "SELECT (COUNT(h.id_parking)/(SELECT DISTINCT(DATE_PART('day', fechaingreso::timestamp - fechasalida::timestamp)+1) from historial where id_parking = $1 and fechaingreso <= $2 group by id_parking, fechaingreso, fechasalida)) promedio FROM historial as h WHERE h.id_parking = $1 ";
+    const result = await this.pool.query(query,[idParking, bodyHisto.fechasalida]);
+    return result.rows;
+  }
 
-  //--------------------regresar los 10 vehículos que mas veces se han registrado en el parqueadero y cuantas veces-------------------------//
-
+  /**
+   * funcion  que permite regresar los 10 vehículos que se han registrado en el parqueadero y cuantas veces
+   * @param id
+   * @returns
+   */
   async listRegis(id: number) {
-    const query = ("SELECT v.placa, count(v.placa) FROM vehiculo as v JOIN parqueadero as p on v.id_parqueadero = p.id WHERE p.id = $1 group by v.placa");
+    const query = ("SELECT v.placa, count(v.placa) as registrado FROM vehiculo as v JOIN parqueadero as p on v.id_parqueadero = p.id WHERE p.id = $1 group by v.placa FETCH FIRST 10 ROWS ONLY;");
     const result = await this.pool.query(query, [id]);
     return result.rows;
   }

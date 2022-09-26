@@ -28,10 +28,9 @@ router.delete('/paking/:idP/vehicle/:idV', async (req, res, next) => {
   }
 })
 
-//------------------------Revision de Metodos-------------------------//
 router.get('/c-vehicle', async (req, res, next) => {
   try {
-    const listVehi = service.listadoVehiculo();
+    const listVehi = await service.listadoVehiculo();
     res.json(listVehi)
   } catch (error) {
     next(error)
@@ -41,7 +40,7 @@ router.get('/c-vehicle', async (req, res, next) => {
 router.get('/c-vehicle/parking/:idP', async (req, res, next) => {
   try {
     const {idP} = req.params
-    const listVehiculos = service.listadoUnVehiculo(Number(idP));
+    const listVehiculos = await service.listadoUnVehiculo(Number(idP));
     res.json(listVehiculos)
   } catch (error) {
     next(error)
