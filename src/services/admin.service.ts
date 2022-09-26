@@ -64,9 +64,8 @@ export class AdminService {
     return result1.rowCount;
   }
 
-  //debe poder hacer un CRUD de parqueaderos.
   /**
-   *
+   * Funcion que permite listar parqueadero
    * @returns
    */
   async listarParking() {
@@ -76,8 +75,8 @@ export class AdminService {
   }
 
   /**
-   *
-   * @param dataParking
+   * Funcion que permite crear un parqueadero
+   * @param dataParking : object Parqueadero
    * @returns
    */
   async crearParking(dataParking: Parqueadero) {
@@ -85,14 +84,14 @@ export class AdminService {
     if (query2.rowCount > 0) {
       throw new Error('No se pudo crear el parqueadero, ya esta creado')
     }
-    const result = await this.pool.query("INSERT INTO parqueadero (nombre) VALUES ($1)", [dataParking.nombre]);
+    const result = await this.pool.query("INSERT INTO parqueadero (nombre, capacidad) VALUES ($1, $2)", [dataParking.nombre, dataParking.capacidad]);
     return result.rowCount;
   }
 
   /**
-   *
-   * @param id
-   * @param dataParking
+   * Funcion que permite actualizar el parqueadero
+   * @param id : number id_parking
+   * @param dataParking : object Parqueadero
    * @returns
    */
   async ActualizarParking(id: number, dataParking: Parqueadero) {
@@ -106,9 +105,9 @@ export class AdminService {
   }
 
   /**
-   *
-   * @param id
-   * @returns
+   * Funcion que permite buscar un parqueadero
+   * @param id : number id_parking number
+   * @returns QueryResult
    */
   async findOneParking(id: number) {
     const query = "SELECT * FROM parqueadero WHERE id = $1";
@@ -120,9 +119,9 @@ export class AdminService {
   }
 
   /**
-   *
-   * @param idParking
-   * @returns
+   * Funcion que permite eliminar un parqueadero
+   * @param idParking : number id_parking
+   * @returns : QueryResultBase.rowCount
    */
   async eliminarParking(idParking: number) {
     const queryParking = await this.pool.query("SELECT id FROM parqueadero WHERE id = $1", [idParking]);
@@ -133,11 +132,10 @@ export class AdminService {
     return result.rowCount;
   }
 
-  //puede asociar parqueaderos a socios. Siempre y cuando el parqueadero no este asociado a ningún otro socio
   /**
-   *
-   * @param idParking
-   * @param idSocio
+   * puede asociar parqueaderos a socios. Siempre y cuando el parqueadero no este asociado a ningún otro socio
+   * @param idParking : number
+   * @param idSocio : number
    * @returns
    */
   async asociarParking(idSocio: number, idParking: Parqueadero) {
@@ -146,21 +144,23 @@ export class AdminService {
     return result.rows;
   }
 
-  //puede revisar listado/detalle de vehículos en el parqueadero
   /**
-   *
-   * @returns
+   * Funcion que permite listar vehiculos en el parqueadero
+   * @returns : QueryResult
    */
   async listarVehiculos() {
     const query = "SELECT v.id, v.nombre, v.placa, v.fechaingreso, s.nombre as socio, s.correo FROM parqueadero as p join vehiculo as v on p.id = v.id_parqueadero join socios as s on s.id = p.id_socio";
     const result = await this.pool.query(query);
+    if(result.rowCount==0){
+      throw new Error('No hay vehiculos en la lista')
+    }
     return result.rows;
   }
 
   /**
-   *
-   * @param idVehiculo
-   * @returns
+   * Funcion que permite buscar un vehiculo
+   * @param idVehiculo : number id_vehiculo
+   * @returns : QueryResult
    */
   async findOneVehiculos(idVehiculo: string) {
     const query = "SELECT v.id, v.nombre as carro, v.fechaingreso, s.nombre, s.correo FROM socios as s join parqueadero as p on s.id = p.id join vehiculo as v on p.id = v.id WHERE v.nombre=$1";
@@ -172,9 +172,9 @@ export class AdminService {
   }
 
   /**
-   *
-   * @param idSocio
-   * @returns
+   * Funcion que permite buscar un vehiculos por socio
+   * @param idSocio : number id_socio
+   * @returns : QueryResult
    */
   async findVehiculosSocio(idSocio: number) {
     const query = "SELECT v.id, v.nombre as carro, v.fechaingreso, s.nombre, s.correo FROM socios as s join parqueadero as p on s.id = p.id join vehiculo as v on p.id = v.id WHERE p.id_socio=$1";
@@ -187,8 +187,8 @@ export class AdminService {
 
   /**
    * Funcion que permite buscar cuantos clientes existen por socio
-   * @param id
-   * @returns
+   * @param id : number id_socio
+   * @returns : QueryResult
    */
   async clienExiSocio(id: number) {
     const query = ("select count(id_cliente)as cantidad from socio_cliente as sc join socios as s on sc.id_socio = s.id where s.id = $1 group by sc.id_socio");

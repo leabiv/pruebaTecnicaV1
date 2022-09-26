@@ -160,8 +160,8 @@ export class SocioService {
 
   /**
    * funcion  que permite regresar los 10 vehículos que se han registrado en el parqueadero y cuantas veces
-   * @param id
-   * @returns
+   * @param id : id_parking number
+   * @returns : QueryResult
    */
   async listRegis(id: number) {
     const query = ("SELECT v.placa, count(v.placa) as registrado FROM vehiculo as v JOIN parqueadero as p on v.id_parqueadero = p.id WHERE p.id = $1 group by v.placa FETCH FIRST 10 ROWS ONLY;");

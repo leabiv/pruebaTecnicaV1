@@ -18,14 +18,21 @@ export class ClienteService {
    * @returns : QueryResult
    */
   async registarEntrada(idSocio: number, dataVehiculo: Vehiculo) {
-    const query2 = await this.pool.query("SELECT id FROM socios where id = $1", [idSocio]);
-    const query3 = await this.pool.query("SELECT placa FROM vehiculo as v  where v.placa = $1", [dataVehiculo.placa])
-    if (query2.rowCount > 0 && query3.rowCount == 0) {
-      const query = "INSERT INTO vehiculo (nombre, placa, fechaingreso, id_parqueadero, id_cliente) VALUES ($1, $2, $3, $4, $5)";
-      const result1 = await this.pool.query(query, [dataVehiculo.nombre, dataVehiculo.placa, dataVehiculo.fechaingreso, dataVehiculo.id_parking, dataVehiculo.id_cliente]);
-      return result1.rows;
+    const querySocio = await this.pool.query("SELECT id FROM socios where id = $1", [idSocio]);
+    const queryVehiculo = await this.pool.query("SELECT placa FROM vehiculo as v  where v.placa = $1", [dataVehiculo.placa]);
+    const cantVehiculo = await this.pool.query("SELECT count(id) FROM vehiculo where id_parqueadero = $1", [dataVehiculo.id_parking]);
+    const caparking = await this.pool.query("SELECT capacidad FROM parqueadero where id = $1", [dataVehiculo.id_parking]);
+
+    if (querySocio.rowCount == 0) {
+      throw new Error("No se puede Registrar Ingreso, Socio no encontrado");
+    } else if (queryVehiculo.rowCount > 0) {
+      throw new Error("No se puede Registrar Ingreso, ya existe la placa");
+    } else if (Number(cantVehiculo.rows[0].count) > caparking.rows[0].capacidad) {
+      throw new Error("No se puede Registrar Ingreso, Capacidad Maxima");
     }
-    return query2.rowCount;
+    const query = "INSERT INTO vehiculo (nombre, placa, fechaingreso, id_parqueadero, id_cliente) VALUES ($1, $2, $3, $4, $5)";
+    const result1 = await this.pool.query(query, [dataVehiculo.nombre, dataVehiculo.placa, dataVehiculo.fechaingreso, dataVehiculo.id_parking, dataVehiculo.id_cliente]);
+    return result1.rowCount;
   }
 
   /**
@@ -50,7 +57,7 @@ export class ClienteService {
    */
   async listadoVehiculo() {
     const query2 = await this.pool.query("SELECT * from vehiculo");
-    if(query2.rowCount==0){
+    if (query2.rowCount == 0) {
       throw new Error("No hay vehiculos");
     }
     return query2.rows;
@@ -64,7 +71,7 @@ export class ClienteService {
   async listadoUnVehiculo(idParking: number) {
     const query2 = ("select v.nombre, v.placa, v.fechaingreso, s.nombre as socio from socios as s join parqueadero as p on s.id = p.id_socio join vehiculo as v on v.id_parqueadero = p.id where p.id = $1");
     const resul = await this.pool.query(query2, [idParking])
-    if(resul.rowCount==0){
+    if (resul.rowCount == 0) {
       throw new Error("No hay ningun vehiculo en el parqueadero por socio")
     }
     return resul.rows;

@@ -1,6 +1,4 @@
 import { Router } from 'express'
-import { pool } from '../conexion';
-import { QueryResult } from 'pg';
 import { ClienteService } from '../services/cliente.service';
 
 const router = Router();
@@ -10,10 +8,10 @@ router.post('/paking/:idS/', async (req, res, next) => {
   try {
     const { idS } = req.params;
     const bodyVehiculo = req.body;
-    const regEntrada = service.registarEntrada(Number(idS), bodyVehiculo);
-    res.json({mensaje: 'Registro Generado'})
-  } catch (error) {
-    next(error)
+    const regEntrada = await service.registarEntrada(Number(idS), bodyVehiculo);
+    res.json(regEntrada)
+  } catch (error: any) {
+    next(res.status(400).json({message: error.message}))
   }
 })
 
@@ -21,10 +19,10 @@ router.delete('/paking/:idP/vehicle/:idV', async (req, res, next) => {
   try {
     const { idP, idV } = req.params;
     const bodyVehiculo = req.body;
-    const salidaEntrada = service.registrarSalida(Number(idP), Number(idV));
-    res.json(salidaEntrada)
-  } catch (error) {
-    next(error)
+    const salidaEntrada = await service.registrarSalida(Number(idP), Number(idV));
+    res.json({message: "id generado del registro"})
+  } catch (error: any) {
+    next(res.status(400).json({message: error.message}))
   }
 })
 
@@ -32,8 +30,8 @@ router.get('/c-vehicle', async (req, res, next) => {
   try {
     const listVehi = await service.listadoVehiculo();
     res.json(listVehi)
-  } catch (error) {
-    next(error)
+  } catch (error: any) {
+    next(res.status(400).json({message: error.message}))
   }
 })
 
@@ -42,8 +40,8 @@ router.get('/c-vehicle/parking/:idP', async (req, res, next) => {
     const {idP} = req.params
     const listVehiculos = await service.listadoUnVehiculo(Number(idP));
     res.json(listVehiculos)
-  } catch (error) {
-    next(error)
+  } catch (error: any) {
+    next(res.status(400).json({message: error.message}))
   }
 })
 
