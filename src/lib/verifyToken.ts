@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 
 interface IPayload{
   _id: string;
-  lat: number;
+  iat: number;
   exp: number;
 }
 
@@ -13,6 +13,7 @@ export const TokenValidation = (req: Request, res:Response, next:NextFunction)=>
     return res.status(401).json('Acceso Denegado');
   }
   const payload = jwt.verify(token, process.env.TOKEN_SECRET || 'tokentest') as IPayload;
+  console.log(payload);
   //req.userId = payload._id;
   next();
 }

@@ -17,7 +17,7 @@ app.get('/', (_req, res) => {
   res.send('Hola mi sevidor');
 })
 
-//app.use('/app/', auth);
+app.use('/app/login', auth);
 app.use('/app/admin',adminRoutes);
 app.use('/app/socio',socioRoutes);
 app.use('/app/client',clienteService);

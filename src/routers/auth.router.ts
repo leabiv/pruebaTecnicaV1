@@ -1,33 +1,26 @@
 import { Router } from 'express'
 import jwt from 'jsonwebtoken'
-import { SocioService } from '../services/socio.service';
+import { AuthService } from '../services/auth.service';
 import bcrypt from 'bcryptjs';
 import { encryptPassword } from '../modules/encrypt.models'
 import { TokenValidation } from '../lib/verifyToken';
 
 const router = Router();
-const service = new SocioService();
-
-router.post('/signup', async (req, res) => {
-  /*const { id } = req.body;
-  const finSocio = await service.findOneSocio(Number(id))
-  const token: string = jwt.sign({ id: id }, process.env.TOKEN_SECRET || 'tokentest')
-  res.header('auth-token', token).json(finSocio)
-  */
-})
+const service = new AuthService();
 
 router.post('/signin', async (req, res) => {
   try {
-    const { id, correo } = req.body;
-    const finSocio = await service.findOneSocio(correo);
-    const token: string = jwt.sign({ _id: id }, process.env.TOKEN_SECRET || 'tokentest', { expiresIn: 300 })
+    const { correo, contrasena } = req.body;
+    const finSocio = await service.findOneSocio(correo,contrasena);
+    const token: string = jwt.sign({ _id: finSocio.forEach(elem => elem.id) }, process.env.TOKEN_SECRET || 'tokentest', { expiresIn: 300 })
     res.header('auth-token', token).json(finSocio)
   } catch (error: any) {
     res.status(400).send(error.message)
   }
 })
 
-router.get('/profile', TokenValidation, (req, res) => {
+router.get('/profile', TokenValidation, async (req, res) => {
+  //const user = await service.findOneSocio(req.userId)
   res.send('estoy en la cuenta')
 })
 

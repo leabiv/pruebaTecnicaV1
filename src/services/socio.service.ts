@@ -155,12 +155,4 @@ export class SocioService {
     return result.rows;
   }
 
-  async findOneSocio(correo: string) {
-    const query = await this.pool.query("SELECT * FROM socios WHERE correo = $1", [correo]);
-    if (query.rowCount == 0) {
-      throw new Error('Invalido email / contraseña o socio no encontrado')
-    }
-    return query.rows;
-  }
-
 }
