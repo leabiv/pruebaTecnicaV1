@@ -3,7 +3,7 @@ CREATE DATABASE prueba;
 CREATE TABLE persona(
   nombre VARCHAR(20),
   correo VARCHAR(20),
-  contrasena VARCHAR(20),
+  contrasena VARCHAR(225),
   rol VARCHAR(20)
 );
 
