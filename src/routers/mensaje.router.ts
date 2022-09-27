@@ -1,6 +1,5 @@
 import { logger } from "../logger/logger";
 import { Router } from 'express';
-import { Correo } from "../modules/enviocorreo.models";
 
 const router = Router();
 

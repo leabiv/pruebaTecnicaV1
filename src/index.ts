@@ -22,7 +22,7 @@ app.use('/app/login', auth);
 app.use('/app/admin',adminRoutes);
 app.use('/app/socio',socioRoutes);
 app.use('/app/client',clienteService);
-app.use('/app/correo',correo);
+app.use('/app/envio',correo);
 
 
 app.listen(port, () => {

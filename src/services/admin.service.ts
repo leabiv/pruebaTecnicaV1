@@ -23,12 +23,17 @@ export class AdminService {
   }
 
   async generate() {
+    //const correo = "admin@gmail.com";
+    //const query = await this.pool.query("select * from administradores where correo = $1",[correo]);
+    //if(query.rowCount==0){
       const hash = await encryptPassword('admin');
       const query1 = "INSERT INTO administradores (nombre, correo, contrasena, rol) VALUES ('adminparking','admin@gmail.com',$1,'admin')";
       const result1 = await this.pool.query(query1, [hash]);
+    //}
+
   }
 
-  async buscarAdmin(correo: string){
+  async buscarAdmin(correo: string) {
     const query = await this.pool.query("SELECT * FROM administradores WHERE correo = $1", [correo]);
     return query.rowCount;
   }
@@ -49,16 +54,20 @@ export class AdminService {
    * @returns
    */
   async createUser(data: User) {
-    const { rol } = data;
-    if (rol == 'socio') {
-      const query = "INSERT INTO socios (nombre, correo, contrasena, rol) VALUES ($1, $2, $3, $4)";
-      const result1 = await this.pool.query(query, [data.nombre, data.correo, data.contrasena, data.rol]);
-      return result1.rows;
-    } else {
-      const query = "INSERT INTO clientes (nombre, correo, contrasena, rol) VALUES ($1, $2, $3, $4)";
-      const result = await this.pool.query(query, [data.nombre, data.correo, data.contrasena, data.rol]);
-      return result.rows;
+    const { rol, correo } = data;
+    const buscarCorreo = await this.pool.query("SELECT * FROM (SELECT * FROM socios union SELECT * FROM clientes) sociosclientes WHERE correo =$1",[correo]);
+    if (buscarCorreo.rowCount == 0) {
+      if (rol == 'socio') {
+        const query = "INSERT INTO socios (nombre, correo, contrasena, rol) VALUES ($1, $2, $3, $4)";
+        const result1 = await this.pool.query(query, [data.nombre, data.correo, data.contrasena, data.rol]);
+        return result1.rows;
+      } else {
+        const query = "INSERT INTO clientes (nombre, correo, contrasena, rol) VALUES ($1, $2, $3, $4)";
+        const result = await this.pool.query(query, [data.nombre, data.correo, data.contrasena, data.rol]);
+        return result.rows;
+      }
     }
+    throw new Error('Correo ya existe')
   }
 
   //debe poder ASOCIAR client a socios

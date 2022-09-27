@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { ClienteService } from '../services/cliente.service';
 import { TokenValidation, validarRolTokenCliente } from '../lib/verifyToken';
+import { logger } from "../logger/logger";
 
 const router = Router();
 const service = new ClienteService()
@@ -10,6 +11,7 @@ router.post('/paking/menber/:idS', TokenValidation, validarRolTokenCliente, asyn
     const { idS } = req.params;
     const bodyVehiculo = req.body;
     const regEntrada = await service.registarEntrada(Number(idS), bodyVehiculo);
+    logger.log("debug","Correo Enviado");
     res.json({message: "id generado del registro"})
   } catch (error: any) {
     next(res.status(400).json({message: error.message}))
