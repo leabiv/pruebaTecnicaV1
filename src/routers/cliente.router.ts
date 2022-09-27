@@ -1,10 +1,11 @@
 import { Router } from 'express'
 import { ClienteService } from '../services/cliente.service';
+import { TokenValidation, validarRolTokenCliente } from '../lib/verifyToken';
 
 const router = Router();
 const service = new ClienteService()
 
-router.post('/paking/:idS/', async (req, res, next) => {
+router.post('/paking/:idS/', TokenValidation, validarRolTokenCliente, async (req, res, next) => {
   try {
     const { idS } = req.params;
     const bodyVehiculo = req.body;
@@ -15,7 +16,7 @@ router.post('/paking/:idS/', async (req, res, next) => {
   }
 })
 
-router.delete('/paking/:idP/vehicle', async (req, res, next) => {
+router.delete('/paking/:idP/vehicle', TokenValidation, validarRolTokenCliente, async (req, res, next) => {
   try {
     const { idP } = req.params;
     const body = req.body;
@@ -26,7 +27,7 @@ router.delete('/paking/:idP/vehicle', async (req, res, next) => {
   }
 })
 
-router.get('/c-vehicle', async (req, res, next) => {
+router.get('/c-vehicle', TokenValidation, validarRolTokenCliente, async (req, res, next) => {
   try {
     const listVehi = await service.listadoVehiculo();
     res.json(listVehi)
@@ -35,7 +36,7 @@ router.get('/c-vehicle', async (req, res, next) => {
   }
 })
 
-router.get('/c-vehicle/parking/:idP', async (req, res, next) => {
+router.get('/c-vehicle/parking/:idP', TokenValidation, validarRolTokenCliente, async (req, res, next) => {
   try {
     const {idP} = req.params
     const listVehiculos = await service.listadoUnVehiculo(Number(idP));

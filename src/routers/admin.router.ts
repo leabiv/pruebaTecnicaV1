@@ -1,12 +1,13 @@
 import { Router } from 'express'
 import { encryptPassword } from '../modules/encrypt.models';
 import { AdminService } from '../services/admin.service';
+import { TokenValidation, validarRolTokenAdmin } from '../lib/verifyToken';
 
 const router = Router();
 const service = new AdminService()
 
 //---------------------Metodos async de Usuarios------------------//
-router.get('/users', async (req, res, next) => {
+router.get('/users', TokenValidation, validarRolTokenAdmin, async (req, res, next) => {
   try {
     const usuarios = await service.findUsers()
     res.status(200).json(usuarios)
@@ -15,7 +16,7 @@ router.get('/users', async (req, res, next) => {
   }
 });
 
-router.post('/users', async (req, res, next) => {
+router.post('/users', TokenValidation, validarRolTokenAdmin, async (req, res, next) => {
   try {
     const body = req.body;
     const hash = await encryptPassword(body.contrasena)
@@ -29,7 +30,7 @@ router.post('/users', async (req, res, next) => {
   }
 });
 
-router.post('/users/:id', async (req, res, next) => {
+router.post('/users/:id', TokenValidation, validarRolTokenAdmin, async (req, res, next) => {
   try {
     const { id } = req.params;
     const body = req.body;
@@ -41,7 +42,7 @@ router.post('/users/:id', async (req, res, next) => {
 });
 
 //---------------------Metodos async de Parqueaderos------------------//
-router.get('/parking', async (req, res, next) => {
+router.get('/parking', TokenValidation, validarRolTokenAdmin, async (req, res, next) => {
   try {
     const parking = await service.listarParking()
     res.json(parking)
@@ -50,7 +51,7 @@ router.get('/parking', async (req, res, next) => {
   }
 });
 
-router.post('/parking', async (req, res, next) => {
+router.post('/parking', TokenValidation, validarRolTokenAdmin, async (req, res, next) => {
   try {
     const body = req.body;
     const parking = await service.crearParking(body)
@@ -60,7 +61,7 @@ router.post('/parking', async (req, res, next) => {
   }
 });
 
-router.put('/parking/:id', async (req, res, next) => {
+router.put('/parking/:id', TokenValidation, validarRolTokenAdmin, async (req, res, next) => {
   try {
     const { id } = req.params;
     const body = req.body;
@@ -71,7 +72,7 @@ router.put('/parking/:id', async (req, res, next) => {
   }
 });
 
-router.get('/parking/:id', async (req, res, next) => {
+router.get('/parking/:id', TokenValidation, validarRolTokenAdmin, async (req, res, next) => {
   try {
     const { id } = req.params;
     const parking = await service.findOneParking(Number(id))
@@ -81,7 +82,7 @@ router.get('/parking/:id', async (req, res, next) => {
   }
 });
 
-router.delete('/parking/:id', async (req, res, next) => {
+router.delete('/parking/:id', TokenValidation, validarRolTokenAdmin, async (req, res, next) => {
   try {
     const { id } = req.params;
     const parking = await service.eliminarParking(Number(id))
@@ -92,7 +93,7 @@ router.delete('/parking/:id', async (req, res, next) => {
 })
 
 //---------------------Metodos async de Asociar parqueaderos a Socios------------------//
-router.put('/users/:id/parking', async (req, res, next) => {
+router.put('/users/:id/parking', TokenValidation, validarRolTokenAdmin, async (req, res, next) => {
   try {
     const { id } = req.params;
     const body = req.body;
@@ -104,7 +105,7 @@ router.put('/users/:id/parking', async (req, res, next) => {
 });
 
 //---------------------Metodos async de Vehiculos------------------//
-router.get('/vehicle', async (req, res, next) => {
+router.get('/vehicle', TokenValidation, validarRolTokenAdmin, async (req, res, next) => {
   try {
     const vehiculos = await service.listarVehiculos()
     res.json(vehiculos)
@@ -113,7 +114,7 @@ router.get('/vehicle', async (req, res, next) => {
   }
 });
 
-router.get('/vehicle/:nombre', async (req, res, next) => {
+router.get('/vehicle/:nombre', TokenValidation, validarRolTokenAdmin, async (req, res, next) => {
   try {
     const { nombre } = req.params;
     const vehiculos = await service.findOneVehiculos(nombre)
@@ -123,7 +124,7 @@ router.get('/vehicle/:nombre', async (req, res, next) => {
   }
 });
 
-router.get('/vehicle/:id/socio', async (req, res, next) => {
+router.get('/vehicle/:id/socio', TokenValidation, validarRolTokenAdmin, async (req, res, next) => {
   try {
     const { id } = req.params;
     const vehiculos = await service.findVehiculosSocio(Number(id))
@@ -133,7 +134,7 @@ router.get('/vehicle/:id/socio', async (req, res, next) => {
   }
 });
 
-router.get('/socio/:id/user', async (req, res, next) => {
+router.get('/socio/:id/user', TokenValidation, validarRolTokenAdmin, async (req, res, next) => {
   try {
     const { id } = req.params;
     const vehiculos = await service.clienExiSocio(Number(id))

@@ -1,12 +1,11 @@
-import { Router } from 'express'
-import { pool } from '../conexion';
-import { QueryResult } from 'pg';
+import { Router } from 'express';
 import { SocioService } from '../services/socio.service';
+import { TokenValidation, validarRolTokenSocio } from '../lib/verifyToken';
 
 const router = Router();
 const service = new SocioService()
 
-router.post('/client', async (req, res, next) => {
+router.post('/client', TokenValidation, validarRolTokenSocio, async (req, res, next) => {
   try {
     const body = req.body;
     const newCliente = await service.crearCliente(body);
@@ -16,7 +15,7 @@ router.post('/client', async (req, res, next) => {
   }
 })
 
-router.post('/:id/client', async (req, res, next) => {
+router.post('/:id/client', TokenValidation, validarRolTokenSocio, async (req, res, next) => {
   try {
     const { id } = req.params;
     const bodyC = req.body
@@ -27,7 +26,7 @@ router.post('/:id/client', async (req, res, next) => {
   }
 })
 
-router.get('/:id/vehicles', async (req, res, next) => {
+router.get('/:id/vehicles', TokenValidation, validarRolTokenSocio, async (req, res, next) => {
   try {
     const { id } = req.params;
     const listparking = await service.listarParqueadero(Number(id));
@@ -37,7 +36,7 @@ router.get('/:id/vehicles', async (req, res, next) => {
   }
 })
 
-router.get('/:id/vehicles/:idV', async (req, res, next) => {
+router.get('/:id/vehicles/:idV', TokenValidation, validarRolTokenSocio, async (req, res, next) => {
   try {
     const { id, idV } = req.params;
     const listparking = await service.destalleParqueadero(Number(id), Number(idV));
@@ -47,7 +46,7 @@ router.get('/:id/vehicles/:idV', async (req, res, next) => {
   }
 })
 
-router.get('/t-parking/old', async (req, res, next) => {
+router.get('/t-parking/old', TokenValidation, validarRolTokenSocio, async (req, res, next) => {
   try {
     const listparking = await service.verificarVehiculosPar();
     res.json(listparking)
@@ -56,7 +55,7 @@ router.get('/t-parking/old', async (req, res, next) => {
   }
 })
 
-router.get('/t-parking/new', async (req, res, next) => {
+router.get('/t-parking/new', TokenValidation, validarRolTokenSocio, async (req, res, next) => {
   try {
     const listparking = await service.verifiVehiParNuevo();
     res.json(listparking)
@@ -65,7 +64,7 @@ router.get('/t-parking/new', async (req, res, next) => {
   }
 })
 
-router.get('/t-parking', async (req, res, next) => {
+router.get('/t-parking', TokenValidation, validarRolTokenSocio, async (req, res, next) => {
   try {
     const listparking = await service.usandoParking();
     res.json(listparking)
@@ -74,7 +73,7 @@ router.get('/t-parking', async (req, res, next) => {
   }
 })
 
-router.get('/t-parking/not', async (req, res, next) => {
+router.get('/t-parking/not', TokenValidation, validarRolTokenSocio, async (req, res, next) => {
   try {
     const listparking = await service.notUsandoParking();
     res.json(listparking)
@@ -83,7 +82,7 @@ router.get('/t-parking/not', async (req, res, next) => {
   }
 })
 
-router.get('/t-parking/usandoPa/:id', async (req, res, next) => {
+router.get('/t-parking/usandoPa/:id', TokenValidation, validarRolTokenSocio, async (req, res, next) => {
   try {
     const { id } = req.params;
     const list = await service.listadoVehiculoCliente(Number(id));
@@ -93,7 +92,7 @@ router.get('/t-parking/usandoPa/:id', async (req, res, next) => {
   }
 })
 
-router.get('/t-parking/usandoPa/:idC/vehicle/:placa', async (req, res, next) => {
+router.get('/t-parking/usandoPa/:idC/vehicle/:placa', TokenValidation, validarRolTokenSocio, async (req, res, next) => {
   try {
     const { idC, placa } = req.params;
     const list = await service.listadoVehiculoDetalle(Number(idC), placa);
@@ -103,7 +102,7 @@ router.get('/t-parking/usandoPa/:idC/vehicle/:placa', async (req, res, next) => 
   }
 })
 
-router.get('/t-parking/:idP/promedio', async (req, res, next) => {
+router.get('/t-parking/:idP/promedio', TokenValidation, validarRolTokenSocio, async (req, res, next) => {
   try {
     const { idP } = req.params;
     const body = req.body;
@@ -114,7 +113,7 @@ router.get('/t-parking/:idP/promedio', async (req, res, next) => {
   }
 })
 
-router.get('/parking/:id', async (req, res, next) => {
+router.get('/parking/:id', TokenValidation, validarRolTokenSocio, async (req, res, next) => {
   try {
     const { id } = req.params;
     const listparking = await service.listRegis(Number(id));

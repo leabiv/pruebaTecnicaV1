@@ -4,6 +4,7 @@ import { Parqueadero } from '../modules/parqueadero.models';
 import { Socios } from '../modules/socios.models';
 import { User } from '../modules/users.models';
 import { Vehiculo } from '../modules/vehiculo.models';
+import { encryptPassword } from '../modules/encrypt.models';
 
 export class AdminService {
 
@@ -16,9 +17,21 @@ export class AdminService {
   constructor() {
     this.socios = [];
     this.clientes = [];
+    this.generate();
     this.pool = pool
   }
 
+  async generate() {
+      const hash = await encryptPassword('admin');
+      const query1 = "INSERT INTO administradores (nombre, correo, contrasena, rol) VALUES ('adminparking','admin@gmail.com',$1,'admin')";
+      const result1 = await this.pool.query(query1, [hash]);
+
+  }
+
+  async buscarAdmin(correo: string){
+    const query = await this.pool.query("SELECT * FROM administradores WHERE correo = $1", [correo]);
+    return query.rowCount;
+  }
   /**
    * Funcion que permite listar los usuarios tipo socio
    * @returns
@@ -151,7 +164,7 @@ export class AdminService {
   async listarVehiculos() {
     const query = "SELECT v.id, v.nombre, v.placa, v.fechaingreso, s.nombre as socio, s.correo FROM parqueadero as p join vehiculo as v on p.id = v.id_parqueadero join socios as s on s.id = p.id_socio";
     const result = await this.pool.query(query);
-    if(result.rowCount==0){
+    if (result.rowCount == 0) {
       throw new Error('No hay vehiculos en la lista')
     }
     return result.rows;
