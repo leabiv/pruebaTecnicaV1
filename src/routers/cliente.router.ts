@@ -9,18 +9,18 @@ router.post('/paking/:idS/', async (req, res, next) => {
     const { idS } = req.params;
     const bodyVehiculo = req.body;
     const regEntrada = await service.registarEntrada(Number(idS), bodyVehiculo);
-    res.json(regEntrada)
+    res.json({message: "id generado del registro"})
   } catch (error: any) {
     next(res.status(400).json({message: error.message}))
   }
 })
 
-router.delete('/paking/:idP/vehicle/:idV', async (req, res, next) => {
+router.delete('/paking/:idP/vehicle', async (req, res, next) => {
   try {
-    const { idP, idV } = req.params;
-    const bodyVehiculo = req.body;
-    const salidaEntrada = await service.registrarSalida(Number(idP), Number(idV));
-    res.json({message: "id generado del registro"})
+    const { idP } = req.params;
+    const body = req.body;
+    const salidaEntrada = await service.registrarSalida(Number(idP), body);
+    res.json({message: "salida registrada"})
   } catch (error: any) {
     next(res.status(400).json({message: error.message}))
   }

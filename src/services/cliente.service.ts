@@ -38,17 +38,22 @@ export class ClienteService {
   /**
    * Funcion que permite registrar la salida del vehiculo
    * @param idParking : number id_Parquedero
-   * @param idVehiculo : number id_Vehiculo
+   * @param dataVehiculo : object Vehiculo enviar placa
    * @returns : QueryResult
    */
-  async registrarSalida(idParking: number, idVehiculo: number) {
-    const query1 = await this.pool.query("SELECT id from parqueadero WHERE id = $1", [idParking]);
-    const query2 = await this.pool.query("SELECT fechaingreso from vehiculo WHERE id = $1 AND fechaingreso IS NOT NULL", [idVehiculo]);
-    if (query1.rowCount > 0 && query2 != null) {
-      const query = await this.pool.query("DELETE FROM vehiculo WHERE id=$1", [idVehiculo]);
-      return query.rows;
+  async registrarSalida(idParking: number, dataVehiculo: Vehiculo) {
+    const querySocio = await this.pool.query("select s.nombre from parqueadero as p join socios as s on p.id_socio = s.id where p.id = $1", [idParking]);
+    const queryVehiculo = await this.pool.query("SELECT placa FROM vehiculo as v  where v.placa = $1", [dataVehiculo.placa]);
+
+    if (querySocio.rowCount == 0) {
+      throw new Error("Socio no encontrado");
+    } else if (queryVehiculo.rowCount > 0) {
+      throw new Error("No se puede Registrar Salida, no existe la placa");
     }
-    return query1.rowCount
+    const guardarSalida = await this.pool.query("INSERT INTO historial (id_parking, placa, fechaingreso) VALUES ($1,$2,$3,$4)",[dataVehiculo.id_parking, dataVehiculo.placa, dataVehiculo.fechaingreso]);
+    const salidaVehiculo = await this.pool.query("DELETE FROM vehiculo WHERE placa = $1",[dataVehiculo.placa]);
+    return guardarSalida.rows;
+    //const query2 = await this.pool.query("SELECT fechaingreso from vehiculo WHERE id = $1 AND fechaingreso IS NOT NULL", [dataVehiculo.id]);
   }
 
   /**
