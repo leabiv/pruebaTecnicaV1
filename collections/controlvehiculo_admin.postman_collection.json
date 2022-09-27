@@ -1,0 +1,429 @@
+{
+	"info": {
+		"_postman_id": "c65f3696-5345-46b9-86bb-4eca3bcfb60e",
+		"name": "controlvehiculo_admin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21727469"
+	},
+	"item": [
+		{
+			"name": "GET LISTADO SOCIO",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaW5kVXNlciI6W3sibm9tYnJlIjoiYWRtaW5wYXJraW5nIiwiY29ycmVvIjoiYWRtaW5AZ21haWwuY29tIiwiY29udHJhc2VuYSI6IiQyYSQxMCRWeFpqdG4yTFlJTVMuSEtqUkhJLnJldVRJenEwSndzYzZyNC5iT09JaVpSdklaYW5NUEZJMiIsInJvbCI6ImFkbWluIiwiaWQiOjM5fV0sImlhdCI6MTY2NDMwNTU0MywiZXhwIjoxNjY0MzIzNTQzfQ.In5HgpKfnSdjQQoUNKKZMZ7GRoVcBbkDdU2E6lQqsao",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/app/admin/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"app",
+						"admin",
+						"users"
+					]
+				},
+				"description": "Listado de Usuarios tipo Socio"
+			},
+			"response": []
+		},
+		{
+			"name": "POST GUARDAR TIPO USUARIO",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaW5kVXNlciI6W3sibm9tYnJlIjoiYWRtaW5wYXJraW5nIiwiY29ycmVvIjoiYWRtaW5AZ21haWwuY29tIiwiY29udHJhc2VuYSI6IiQyYSQxMCRWeFpqdG4yTFlJTVMuSEtqUkhJLnJldVRJenEwSndzYzZyNC5iT09JaVpSdklaYW5NUEZJMiIsInJvbCI6ImFkbWluIiwiaWQiOjM5fV0sImlhdCI6MTY2NDMwNTU0MywiZXhwIjoxNjY0MzIzNTQzfQ.In5HgpKfnSdjQQoUNKKZMZ7GRoVcBbkDdU2E6lQqsao",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"nombre\": \"lisa\",\r\n        \"correo\": \"lisa@gmail.com\",\r\n        \"contrasena\": \"12345\",\r\n        \"rol\": \"cliente\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/app/admin/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"app",
+						"admin",
+						"users"
+					]
+				},
+				"description": "Guarda los usuarios Tipo socio y cliente"
+			},
+			"response": []
+		},
+		{
+			"name": "POST ASOCIAR CLIENTE",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaW5kVXNlciI6W3sibm9tYnJlIjoiYWRtaW5wYXJraW5nIiwiY29ycmVvIjoiYWRtaW5AZ21haWwuY29tIiwiY29udHJhc2VuYSI6IiQyYSQxMCRWeFpqdG4yTFlJTVMuSEtqUkhJLnJldVRJenEwSndzYzZyNC5iT09JaVpSdklaYW5NUEZJMiIsInJvbCI6ImFkbWluIiwiaWQiOjM5fV0sImlhdCI6MTY2NDMwNTU0MywiZXhwIjoxNjY0MzIzNTQzfQ.In5HgpKfnSdjQQoUNKKZMZ7GRoVcBbkDdU2E6lQqsao",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"id\": 15\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/app/admin/users/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"app",
+						"admin",
+						"users",
+						"5"
+					]
+				},
+				"description": "Permite asociar un cliente a socio"
+			},
+			"response": []
+		},
+		{
+			"name": "GET LISTAR PARQUEADEROS",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaW5kVXNlciI6W3sibm9tYnJlIjoiYWRtaW5wYXJraW5nIiwiY29ycmVvIjoiYWRtaW5AZ21haWwuY29tIiwiY29udHJhc2VuYSI6IiQyYSQxMCRWeFpqdG4yTFlJTVMuSEtqUkhJLnJldVRJenEwSndzYzZyNC5iT09JaVpSdklaYW5NUEZJMiIsInJvbCI6ImFkbWluIiwiaWQiOjM5fV0sImlhdCI6MTY2NDMwNTU0MywiZXhwIjoxNjY0MzIzNTQzfQ.In5HgpKfnSdjQQoUNKKZMZ7GRoVcBbkDdU2E6lQqsao",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/app/admin/parking",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"app",
+						"admin",
+						"parking"
+					]
+				},
+				"description": "Permite listar los Parqueaderos"
+			},
+			"response": []
+		},
+		{
+			"name": "POST CREAR PARQUEADERO",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaW5kVXNlciI6W3sibm9tYnJlIjoiYWRtaW5wYXJraW5nIiwiY29ycmVvIjoiYWRtaW5AZ21haWwuY29tIiwiY29udHJhc2VuYSI6IiQyYSQxMCRWeFpqdG4yTFlJTVMuSEtqUkhJLnJldVRJenEwSndzYzZyNC5iT09JaVpSdklaYW5NUEZJMiIsInJvbCI6ImFkbWluIiwiaWQiOjM5fV0sImlhdCI6MTY2NDMwNTU0MywiZXhwIjoxNjY0MzIzNTQzfQ.In5HgpKfnSdjQQoUNKKZMZ7GRoVcBbkDdU2E6lQqsao",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n        \"nombre\": \"parqueadero6\",\r\n        \"capacidad\": 30\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/app/admin/parking",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"app",
+						"admin",
+						"parking"
+					]
+				},
+				"description": "Permite crear un parqueadero "
+			},
+			"response": []
+		},
+		{
+			"name": "PUT ACTUALIZAR PARQUEADERO",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaW5kVXNlciI6W3sibm9tYnJlIjoiYWRtaW5wYXJraW5nIiwiY29ycmVvIjoiYWRtaW5AZ21haWwuY29tIiwiY29udHJhc2VuYSI6IiQyYSQxMCRWeFpqdG4yTFlJTVMuSEtqUkhJLnJldVRJenEwSndzYzZyNC5iT09JaVpSdklaYW5NUEZJMiIsInJvbCI6ImFkbWluIiwiaWQiOjM5fV0sImlhdCI6MTY2NDMwNTU0MywiZXhwIjoxNjY0MzIzNTQzfQ.In5HgpKfnSdjQQoUNKKZMZ7GRoVcBbkDdU2E6lQqsao",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n        \"nombre\": \"parqueadero7\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/app/admin/parking/6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"app",
+						"admin",
+						"parking",
+						"6"
+					]
+				},
+				"description": "Permite Actualizar un parqueadero"
+			},
+			"response": []
+		},
+		{
+			"name": "GET BUSCAR PARQUEADERO",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaW5kVXNlciI6W3sibm9tYnJlIjoiYWRtaW5wYXJraW5nIiwiY29ycmVvIjoiYWRtaW5AZ21haWwuY29tIiwiY29udHJhc2VuYSI6IiQyYSQxMCRWeFpqdG4yTFlJTVMuSEtqUkhJLnJldVRJenEwSndzYzZyNC5iT09JaVpSdklaYW5NUEZJMiIsInJvbCI6ImFkbWluIiwiaWQiOjM5fV0sImlhdCI6MTY2NDMwNTU0MywiZXhwIjoxNjY0MzIzNTQzfQ.In5HgpKfnSdjQQoUNKKZMZ7GRoVcBbkDdU2E6lQqsao",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/app/admin/parking/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"app",
+						"admin",
+						"parking",
+						"1"
+					]
+				},
+				"description": "Permite buscar parqueadero por su id"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE ELIMINAR PARQUEADERO",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaW5kVXNlciI6W3sibm9tYnJlIjoiYWRtaW5wYXJraW5nIiwiY29ycmVvIjoiYWRtaW5AZ21haWwuY29tIiwiY29udHJhc2VuYSI6IiQyYSQxMCRWeFpqdG4yTFlJTVMuSEtqUkhJLnJldVRJenEwSndzYzZyNC5iT09JaVpSdklaYW5NUEZJMiIsInJvbCI6ImFkbWluIiwiaWQiOjM5fV0sImlhdCI6MTY2NDMwNTU0MywiZXhwIjoxNjY0MzIzNTQzfQ.In5HgpKfnSdjQQoUNKKZMZ7GRoVcBbkDdU2E6lQqsao",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/app/admin/parking/6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"app",
+						"admin",
+						"parking",
+						"6"
+					]
+				},
+				"description": "Permite eliminar un parqueadero por id"
+			},
+			"response": []
+		},
+		{
+			"name": "PUT ASOCIAR PARQUEADERO",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaW5kVXNlciI6W3sibm9tYnJlIjoiYWRtaW5wYXJraW5nIiwiY29ycmVvIjoiYWRtaW5AZ21haWwuY29tIiwiY29udHJhc2VuYSI6IiQyYSQxMCRWeFpqdG4yTFlJTVMuSEtqUkhJLnJldVRJenEwSndzYzZyNC5iT09JaVpSdklaYW5NUEZJMiIsInJvbCI6ImFkbWluIiwiaWQiOjM5fV0sImlhdCI6MTY2NDMwNTU0MywiZXhwIjoxNjY0MzIzNTQzfQ.In5HgpKfnSdjQQoUNKKZMZ7GRoVcBbkDdU2E6lQqsao",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"parqueadero6\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/app/admin/member/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"app",
+						"admin",
+						"member",
+						"4"
+					]
+				},
+				"description": "Permite asociar un parqueadero aun socio, mediante un id de socio y un body de parqueadero"
+			},
+			"response": []
+		},
+		{
+			"name": "GET LISTAR VEHICULO",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaW5kVXNlciI6W3sibm9tYnJlIjoiYWRtaW5wYXJraW5nIiwiY29ycmVvIjoiYWRtaW5AZ21haWwuY29tIiwiY29udHJhc2VuYSI6IiQyYSQxMCRWeFpqdG4yTFlJTVMuSEtqUkhJLnJldVRJenEwSndzYzZyNC5iT09JaVpSdklaYW5NUEZJMiIsInJvbCI6ImFkbWluIiwiaWQiOjM5fV0sImlhdCI6MTY2NDMwNTU0MywiZXhwIjoxNjY0MzIzNTQzfQ.In5HgpKfnSdjQQoUNKKZMZ7GRoVcBbkDdU2E6lQqsao",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/app/admin/vehicle",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"app",
+						"admin",
+						"vehicle"
+					]
+				},
+				"description": "Permite listar todos los vehiculos"
+			},
+			"response": []
+		},
+		{
+			"name": "GET BUSCAR VEHICULO",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaW5kVXNlciI6W3sibm9tYnJlIjoiYWRtaW5wYXJraW5nIiwiY29ycmVvIjoiYWRtaW5AZ21haWwuY29tIiwiY29udHJhc2VuYSI6IiQyYSQxMCRWeFpqdG4yTFlJTVMuSEtqUkhJLnJldVRJenEwSndzYzZyNC5iT09JaVpSdklaYW5NUEZJMiIsInJvbCI6ImFkbWluIiwiaWQiOjM5fV0sImlhdCI6MTY2NDMwNTU0MywiZXhwIjoxNjY0MzIzNTQzfQ.In5HgpKfnSdjQQoUNKKZMZ7GRoVcBbkDdU2E6lQqsao",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:4000/app/admin/vehicle/ETU-256",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"app",
+						"admin",
+						"vehicle",
+						"ETU-256"
+					]
+				},
+				"description": "Permite buscar el vehiculo por id"
+			},
+			"response": []
+		},
+		{
+			"name": "GET BUSCAR VEHICULO POR SOCIO",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaW5kVXNlciI6W3sibm9tYnJlIjoiYWRtaW5wYXJraW5nIiwiY29ycmVvIjoiYWRtaW5AZ21haWwuY29tIiwiY29udHJhc2VuYSI6IiQyYSQxMCRWeFpqdG4yTFlJTVMuSEtqUkhJLnJldVRJenEwSndzYzZyNC5iT09JaVpSdklaYW5NUEZJMiIsInJvbCI6ImFkbWluIiwiaWQiOjM5fV0sImlhdCI6MTY2NDMwNTU0MywiZXhwIjoxNjY0MzIzNTQzfQ.In5HgpKfnSdjQQoUNKKZMZ7GRoVcBbkDdU2E6lQqsao",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/app/admin/vehicle/member/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"app",
+						"admin",
+						"vehicle",
+						"member",
+						"1"
+					]
+				},
+				"description": "Permite buscar los vehiculos que esten asociados a un socio mediante el id del socio "
+			},
+			"response": []
+		},
+		{
+			"name": "GET CUANTOS CLIENTES POR SOCIO",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/app/admin/socio/1/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"app",
+						"admin",
+						"socio",
+						"1",
+						"user"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

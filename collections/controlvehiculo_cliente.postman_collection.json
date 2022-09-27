@@ -1,0 +1,104 @@
+{
+	"info": {
+		"_postman_id": "d07a2a11-abc4-4a08-83df-81795df12a59",
+		"name": "controlvehiculo_cliente",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21727469"
+	},
+	"item": [
+		{
+			"name": "POST REGISTRAR ENTRADA VEHICULO",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaW5kVXNlciI6W3sibm9tYnJlIjoiY2xpZW50ZSIsImNvcnJlbyI6ImNsaWVudGVAZ21haWwuY29tIiwiY29udHJhc2VuYSI6IiQyYSQxMCQ0NW01ems5bVF3WUhFaW80UFRFQWouTnhEVE1GZ01EOEh2cUhaVC5rdjUuVVprLm4uNFBPSyIsInJvbCI6ImNsaWVudGUiLCJpZCI6MTN9XSwiaWF0IjoxNjY0MzA4MzYwLCJleHAiOjE2NjQzMjYzNjB9.yRlqUxFXk1g2jzgTtEjfddAxz4WOhccQ5AzwvmOh6dY",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"nuevo\",\r\n    \"placa\": \"JAJ-02\",\r\n    \"fechaingreso\": \"2022-09-27\",\r\n    \"id_parking\": 7,\r\n    \"id_cliente\": 15\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/app/client/paking/menber/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"app",
+						"client",
+						"paking",
+						"menber",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET LISTAR VEHICULOS",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaW5kVXNlciI6W3sibm9tYnJlIjoiY2xpZW50ZSIsImNvcnJlbyI6ImNsaWVudGVAZ21haWwuY29tIiwiY29udHJhc2VuYSI6IiQyYSQxMCQ0NW01ems5bVF3WUhFaW80UFRFQWouTnhEVE1GZ01EOEh2cUhaVC5rdjUuVVprLm4uNFBPSyIsInJvbCI6ImNsaWVudGUiLCJpZCI6MTN9XSwiaWF0IjoxNjY0MzA4MzYwLCJleHAiOjE2NjQzMjYzNjB9.yRlqUxFXk1g2jzgTtEjfddAxz4WOhccQ5AzwvmOh6dY",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/app/client/c-vehicle",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"app",
+						"client",
+						"c-vehicle"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET LISTAR VEHICULO PARQUEADERO",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaW5kVXNlciI6W3sibm9tYnJlIjoiY2xpZW50ZTIiLCJjb3JyZW8iOiJjbGllbnRlMkBnbWFpbC5jb20iLCJjb250cmFzZW5hIjoiJDJhJDEwJFZ1bDI2ZTNxdUg0VkRuMXB1Y2J5bC4uQ285NXMzRkM4cG9MbDhPbzF0VWd4QkozUWxBQUg2Iiwicm9sIjoiY2xpZW50ZSIsImlkIjoxNH1dLCJpYXQiOjE2NjQyOTYyNDcsImV4cCI6MTY2NDMxNDI0N30.CRj1bcSEPiMAV4I0ls1bkDbDMPJw7_S_lA44jRyQ7eQ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/app/client/c-vehicle/parking/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"app",
+						"client",
+						"c-vehicle",
+						"parking",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,366 @@
+{
+	"info": {
+		"_postman_id": "c21c7955-ab65-4d57-b386-2d693aa23b69",
+		"name": "controlvehiculo_socio",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21727469"
+	},
+	"item": [
+		{
+			"name": "POST CREAR USUARIO CLIENTE",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"juanito\",\r\n    \"correo\": \"juanito@gmail.com\",\r\n    \"contrasena\": \"12345\",\r\n    \"rol\": \"cliente\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/app/socio/client",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"app",
+						"socio",
+						"client"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST ASOCIAR CLIENTE",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 9\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/app/socio/1/client",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"app",
+						"socio",
+						"1",
+						"client"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET LISTAR PARQUEADERO POR SOCIO",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaW5kVXNlciI6W3sibm9tYnJlIjoic29jaW8iLCJjb3JyZW8iOiJzb2Npb0BnbWFpbC5jb20iLCJjb250cmFzZW5hIjoiJDJhJDEwJHFHMkJuOHJIM2JSdW9TdVYza2VNUXV2YUFNcmFSTnVrSEVycTJMMFhaWTZDRWRoT3JoMjRpIiwicm9sIjoic29jaW8iLCJpZCI6Nn1dLCJpYXQiOjE2NjQzMTEzNDEsImV4cCI6MTY2NDMyOTM0MX0.byicMWtWhyhyHJLSa5oAU8IRAiydXicXSxmUfqHj8xw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/app/socio/vehicles",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"app",
+						"socio",
+						"vehicles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET DETALLE DEL VEHICULO PARQUEADERO ",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaW5kVXNlciI6W3sibm9tYnJlIjoic29jaW8iLCJjb3JyZW8iOiJzb2Npb0BnbWFpbC5jb20iLCJjb250cmFzZW5hIjoiJDJhJDEwJHFHMkJuOHJIM2JSdW9TdVYza2VNUXV2YUFNcmFSTnVrSEVycTJMMFhaWTZDRWRoT3JoMjRpIiwicm9sIjoic29jaW8iLCJpZCI6Nn1dLCJpYXQiOjE2NjQzMTEzNDEsImV4cCI6MTY2NDMyOTM0MX0.byicMWtWhyhyHJLSa5oAU8IRAiydXicXSxmUfqHj8xw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/app/socio/vehicles/IOJ-255",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"app",
+						"socio",
+						"vehicles",
+						"IOJ-255"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET VERIFICAR VEHICULOS NO SON PRIMERA VEZ",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaW5kVXNlciI6W3sibm9tYnJlIjoic29jaW8iLCJjb3JyZW8iOiJzb2Npb0BnbWFpbC5jb20iLCJjb250cmFzZW5hIjoiJDJhJDEwJHFHMkJuOHJIM2JSdW9TdVYza2VNUXV2YUFNcmFSTnVrSEVycTJMMFhaWTZDRWRoT3JoMjRpIiwicm9sIjoic29jaW8iLCJpZCI6Nn1dLCJpYXQiOjE2NjQzMTEzNDEsImV4cCI6MTY2NDMyOTM0MX0.byicMWtWhyhyHJLSa5oAU8IRAiydXicXSxmUfqHj8xw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/app/socio/t-parking/old",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"app",
+						"socio",
+						"t-parking",
+						"old"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET VERIFICAR VEHICULOS NUEVOS",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaW5kVXNlciI6W3sibm9tYnJlIjoic29jaW8iLCJjb3JyZW8iOiJzb2Npb0BnbWFpbC5jb20iLCJjb250cmFzZW5hIjoiJDJhJDEwJHFHMkJuOHJIM2JSdW9TdVYza2VNUXV2YUFNcmFSTnVrSEVycTJMMFhaWTZDRWRoT3JoMjRpIiwicm9sIjoic29jaW8iLCJpZCI6Nn1dLCJpYXQiOjE2NjQzMTEzNDEsImV4cCI6MTY2NDMyOTM0MX0.byicMWtWhyhyHJLSa5oAU8IRAiydXicXSxmUfqHj8xw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/app/socio/t-parking/new",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"app",
+						"socio",
+						"t-parking",
+						"new"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET CUANTOS CLIENTES USAN EL PLARQUEADERO",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaW5kVXNlciI6W3sibm9tYnJlIjoic29jaW8iLCJjb3JyZW8iOiJzb2Npb0BnbWFpbC5jb20iLCJjb250cmFzZW5hIjoiJDJhJDEwJHFHMkJuOHJIM2JSdW9TdVYza2VNUXV2YUFNcmFSTnVrSEVycTJMMFhaWTZDRWRoT3JoMjRpIiwicm9sIjoic29jaW8iLCJpZCI6Nn1dLCJpYXQiOjE2NjQzMTEzNDEsImV4cCI6MTY2NDMyOTM0MX0.byicMWtWhyhyHJLSa5oAU8IRAiydXicXSxmUfqHj8xw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/app/socio/t-parking",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"app",
+						"socio",
+						"t-parking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET CUANTOS CLIENTES NO USAN PARQUEADERO",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaW5kVXNlciI6W3sibm9tYnJlIjoic29jaW8iLCJjb3JyZW8iOiJzb2Npb0BnbWFpbC5jb20iLCJjb250cmFzZW5hIjoiJDJhJDEwJHFHMkJuOHJIM2JSdW9TdVYza2VNUXV2YUFNcmFSTnVrSEVycTJMMFhaWTZDRWRoT3JoMjRpIiwicm9sIjoic29jaW8iLCJpZCI6Nn1dLCJpYXQiOjE2NjQzMTEzNDEsImV4cCI6MTY2NDMyOTM0MX0.byicMWtWhyhyHJLSa5oAU8IRAiydXicXSxmUfqHj8xw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/app/socio/t-parking/not",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"app",
+						"socio",
+						"t-parking",
+						"not"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET LISTAR VEHICULOS POR CLIENTE",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaW5kVXNlciI6W3sibm9tYnJlIjoic29jaW8iLCJjb3JyZW8iOiJzb2Npb0BnbWFpbC5jb20iLCJjb250cmFzZW5hIjoiJDJhJDEwJHFHMkJuOHJIM2JSdW9TdVYza2VNUXV2YUFNcmFSTnVrSEVycTJMMFhaWTZDRWRoT3JoMjRpIiwicm9sIjoic29jaW8iLCJpZCI6Nn1dLCJpYXQiOjE2NjQzMTEzNDEsImV4cCI6MTY2NDMyOTM0MX0.byicMWtWhyhyHJLSa5oAU8IRAiydXicXSxmUfqHj8xw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/app/socio/t-parking/usandoPa/9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"app",
+						"socio",
+						"t-parking",
+						"usandoPa",
+						"9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET DETALLE VEHICULO POR CLIENTE",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaW5kVXNlciI6W3sibm9tYnJlIjoic29jaW8iLCJjb3JyZW8iOiJzb2Npb0BnbWFpbC5jb20iLCJjb250cmFzZW5hIjoiJDJhJDEwJHFHMkJuOHJIM2JSdW9TdVYza2VNUXV2YUFNcmFSTnVrSEVycTJMMFhaWTZDRWRoT3JoMjRpIiwicm9sIjoic29jaW8iLCJpZCI6Nn1dLCJpYXQiOjE2NjQzMTEzNDEsImV4cCI6MTY2NDMyOTM0MX0.byicMWtWhyhyHJLSa5oAU8IRAiydXicXSxmUfqHj8xw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/app/socio/t-parking/usandoPa/9/vehicle/ASA-256",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"app",
+						"socio",
+						"t-parking",
+						"usandoPa",
+						"9",
+						"vehicle",
+						"ASA-256"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET PROMEDIO RANGO FECHA",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaW5kVXNlciI6W3sibm9tYnJlIjoic29jaW8iLCJjb3JyZW8iOiJzb2Npb0BnbWFpbC5jb20iLCJjb250cmFzZW5hIjoiJDJhJDEwJHFHMkJuOHJIM2JSdW9TdVYza2VNUXV2YUFNcmFSTnVrSEVycTJMMFhaWTZDRWRoT3JoMjRpIiwicm9sIjoic29jaW8iLCJpZCI6Nn1dLCJpYXQiOjE2NjQzMTEzNDEsImV4cCI6MTY2NDMyOTM0MX0.byicMWtWhyhyHJLSa5oAU8IRAiydXicXSxmUfqHj8xw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fechasalida\": \"2022-09-22\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/app/socio/t-parking/2/promedio",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"app",
+						"socio",
+						"t-parking",
+						"2",
+						"promedio"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET REGRESAR LOS 10 VEHICULO",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaW5kVXNlciI6W3sibm9tYnJlIjoic29jaW8iLCJjb3JyZW8iOiJzb2Npb0BnbWFpbC5jb20iLCJjb250cmFzZW5hIjoiJDJhJDEwJHFHMkJuOHJIM2JSdW9TdVYza2VNUXV2YUFNcmFSTnVrSEVycTJMMFhaWTZDRWRoT3JoMjRpIiwicm9sIjoic29jaW8iLCJpZCI6Nn1dLCJpYXQiOjE2NjQzMTEzNDEsImV4cCI6MTY2NDMyOTM0MX0.byicMWtWhyhyHJLSa5oAU8IRAiydXicXSxmUfqHj8xw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/app/socio/parking/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"app",
+						"socio",
+						"parking",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

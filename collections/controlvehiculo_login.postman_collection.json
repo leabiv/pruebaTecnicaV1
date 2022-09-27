@@ -1,0 +1,40 @@
+{
+	"info": {
+		"_postman_id": "ce25e546-c539-46c9-a1ae-04ed772fa28a",
+		"name": "controlvehiculo_login",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21727469"
+	},
+	"item": [
+		{
+			"name": "POST VALIDAR USUARIO",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"correo\": \"socio@gmail.com\",\r\n    \"contrasena\": \"12345\",\r\n    \"rol\": \"socio\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/app/login/signin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"app",
+						"login",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
