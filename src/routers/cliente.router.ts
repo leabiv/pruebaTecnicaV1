@@ -5,7 +5,7 @@ import { TokenValidation, validarRolTokenCliente } from '../lib/verifyToken';
 const router = Router();
 const service = new ClienteService()
 
-router.post('/paking/:idS/', TokenValidation, validarRolTokenCliente, async (req, res, next) => {
+router.post('/paking/menber/:idS', TokenValidation, validarRolTokenCliente, async (req, res, next) => {
   try {
     const { idS } = req.params;
     const bodyVehiculo = req.body;

@@ -66,11 +66,11 @@ export class SocioService {
   /**
    * Funcion que permite ver el detalle del vehiculo en su parqueadero
    * @param idSocio : number id socio
-   * @param idVehiculo : number id vehiculo
+   * @param placa : string id vehiculo
    * @returns
    */
-  async destalleParqueadero(idSocio: number, idVehiculo: number) {
-    const result1 = await this.pool.query("SELECT v.nombre, v.placa, v.fechaingreso FROM parqueadero as p join socios as s on p.id_socio = s.id join vehiculo as v on p.id = v.id_parqueadero where v.id = $1 and s.id=$2", [idVehiculo, idSocio]);
+  async destalleParqueadero(idSocio: number, placa: string) {
+    const result1 = await this.pool.query("SELECT v.nombre, v.placa, v.fechaingreso FROM parqueadero as p join socios as s on p.id_socio = s.id join vehiculo as v on p.id = v.id_parqueadero where v.placa = $1 and s.id=$2", [placa, idSocio]);
     if (result1.rowCount == 0) {
       throw new Error('Vehiculo no encontrado')
     }
@@ -152,9 +152,9 @@ export class SocioService {
    * @param fecha : string fecha 'YYYY-MM-DD'
    * @returns : QueryResult
    */
-  async promedioRangoFecha(idParking:number, bodyHisto:Historial){
+  async promedioRangoFecha(idParking: number, bodyHisto: Historial) {
     const query = "SELECT (COUNT(h.id_parking)/(SELECT DISTINCT(DATE_PART('day', fechaingreso::timestamp - fechasalida::timestamp)+1) from historial where id_parking = $1 and fechaingreso <= $2 group by id_parking, fechaingreso, fechasalida)) promedio FROM historial as h WHERE h.id_parking = $1 ";
-    const result = await this.pool.query(query,[idParking, bodyHisto.fechasalida]);
+    const result = await this.pool.query(query, [idParking, bodyHisto.fechasalida]);
     return result.rows;
   }
 

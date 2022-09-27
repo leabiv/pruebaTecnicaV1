@@ -93,7 +93,7 @@ router.delete('/parking/:id', TokenValidation, validarRolTokenAdmin, async (req,
 })
 
 //---------------------Metodos async de Asociar parqueaderos a Socios------------------//
-router.put('/users/:id/parking', TokenValidation, validarRolTokenAdmin, async (req, res, next) => {
+router.put('/member/:id', TokenValidation, validarRolTokenAdmin, async (req, res, next) => {
   try {
     const { id } = req.params;
     const body = req.body;
@@ -124,7 +124,7 @@ router.get('/vehicle/:nombre', TokenValidation, validarRolTokenAdmin, async (req
   }
 });
 
-router.get('/vehicle/:id/socio', TokenValidation, validarRolTokenAdmin, async (req, res, next) => {
+router.get('/vehicle/member/:id', TokenValidation, validarRolTokenAdmin, async (req, res, next) => {
   try {
     const { id } = req.params;
     const vehiculos = await service.findVehiculosSocio(Number(id))

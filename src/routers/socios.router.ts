@@ -26,20 +26,20 @@ router.post('/:id/client', TokenValidation, validarRolTokenSocio, async (req, re
   }
 })
 
-router.get('/:id/vehicles', TokenValidation, validarRolTokenSocio, async (req, res, next) => {
+router.get('/vehicles', TokenValidation, validarRolTokenSocio, async (req, res, next) => {
   try {
     const { id } = req.params;
-    const listparking = await service.listarParqueadero(Number(id));
+    const listparking = await service.listarParqueadero(req.body.userId);
     res.json(listparking)
   } catch (error) {
     next(error)
   }
 })
 
-router.get('/:id/vehicles/:idV', TokenValidation, validarRolTokenSocio, async (req, res, next) => {
+router.get('/vehicles/:placa', TokenValidation, validarRolTokenSocio, async (req, res, next) => {
   try {
-    const { id, idV } = req.params;
-    const listparking = await service.destalleParqueadero(Number(id), Number(idV));
+    const { placa } = req.params;
+    const listparking = await service.destalleParqueadero(req.body.userId, placa);
     res.json(listparking)
   } catch (error) {
     next(error)

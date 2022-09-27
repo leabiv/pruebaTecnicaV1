@@ -18,8 +18,9 @@ export class ClienteService {
    * @returns : QueryResult
    */
   async registarEntrada(idSocio: number, dataVehiculo: Vehiculo) {
-    const querySocio = await this.pool.query("SELECT id FROM socios where id = $1", [idSocio]);
+
     const queryVehiculo = await this.pool.query("SELECT placa FROM vehiculo as v  where v.placa = $1", [dataVehiculo.placa]);
+    const querySocio = await this.pool.query("SELECT id FROM socios where id = $1", [idSocio]);
     const cantVehiculo = await this.pool.query("SELECT count(id) FROM vehiculo where id_parqueadero = $1", [dataVehiculo.id_parking]);
     const caparking = await this.pool.query("SELECT capacidad FROM parqueadero where id = $1", [dataVehiculo.id_parking]);
 

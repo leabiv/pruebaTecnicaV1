@@ -17,6 +17,7 @@ export class AdminService {
   constructor() {
     this.socios = [];
     this.clientes = [];
+    //this.generate(); permite generar un administrador cada vez que se reinicie la maquina
     this.generate();
     this.pool = pool
   }
@@ -25,7 +26,6 @@ export class AdminService {
       const hash = await encryptPassword('admin');
       const query1 = "INSERT INTO administradores (nombre, correo, contrasena, rol) VALUES ('adminparking','admin@gmail.com',$1,'admin')";
       const result1 = await this.pool.query(query1, [hash]);
-
   }
 
   async buscarAdmin(correo: string){
@@ -152,8 +152,8 @@ export class AdminService {
    * @returns
    */
   async asociarParking(idSocio: number, idParking: Parqueadero) {
-    const query = "UPDATE parqueadero SET id_socio = $1 WHERE id = $2 AND id_socio is null";
-    const result = await this.pool.query(query, [idSocio, idParking.id]);
+    const query = "UPDATE parqueadero SET id_socio = $1 WHERE nombre = $2 AND id_socio is null";
+    const result = await this.pool.query(query, [idSocio, idParking.nombre]);
     return result.rows;
   }
 
@@ -172,12 +172,12 @@ export class AdminService {
 
   /**
    * Funcion que permite buscar un vehiculo
-   * @param idVehiculo : number id_vehiculo
+   * @param placa : string placaVehiculo
    * @returns : QueryResult
    */
-  async findOneVehiculos(idVehiculo: string) {
-    const query = "SELECT v.id, v.nombre as carro, v.fechaingreso, s.nombre, s.correo FROM socios as s join parqueadero as p on s.id = p.id join vehiculo as v on p.id = v.id WHERE v.nombre=$1";
-    const result = await this.pool.query(query, [idVehiculo]);
+  async findOneVehiculos(placa: string) {
+    const query = "SELECT v.nombre as carro, v.fechaingreso, s.nombre, s.correo FROM socios as s join parqueadero as p on s.id = p.id join vehiculo as v on p.id = v.id WHERE v.placa=$1";
+    const result = await this.pool.query(query, [placa]);
     if (result.rowCount == 0) {
       throw new Error('Vehiculo no encontrado')
     }
