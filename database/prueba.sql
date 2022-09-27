@@ -9,15 +9,15 @@ CREATE TABLE persona(
 
 CREATE TABLE clientes(
   id SERIAL PRIMARY KEY
-);
+)INHERITS(persona);
 
 CREATE TABLE socios(
   id SERIAL PRIMARY KEY
-);
+)INHERITS(persona);
 
 CREATE TABLE administradores(
   id SERIAL PRIMARY KEY
-);
+)INHERITS(persona);
 
 CREATE TABLE vehiculo(
   id SERIAL PRIMARY KEY,
@@ -48,18 +48,12 @@ CREATE TABLE historial(
   fechaingreso DATE
 )
 
-INSERT INTO administradores (usuario,correo,contrasena,rol) values ('admin','admin@gmail.com','12345','admin');
 select * from administradores
-
-INSERT INTO socios (usuario,correo,contrasena,rol,id_ciente) values ('pepito','pepito@gmail.com','12345','socio',1);
-INSERT INTO socios (usuario,correo,contrasena,rol,id_ciente) values ('luis','luis@gmail.com','12345','socio',2);
-INSERT INTO socios (usuario,correo,contrasena,rol,id_ciente) values ('carlos','carlos@gmail.com','12345','socio',3);
 select * from socios
-
-INSERT INTO clientes (usuario,correo,contrasena,rol,id_vehiculo) values ('sara','sara@gmail.com','12345','cliente',1);
-INSERT INTO clientes (usuario,correo,contrasena,rol,id_vehiculo) values ('mateo','mateo@gmail.com','12345','cliente',2);
-INSERT INTO clientes (usuario,correo,contrasena,rol,id_vehiculo) values ('juan','juan@gmail.com','12345','cliente',3);
 select * from clientes
+select * from historial
+select * from socio_cliente
+select * from parqueadero
 
 
 ALTER TABLE socios
