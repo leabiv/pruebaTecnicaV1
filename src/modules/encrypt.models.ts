@@ -5,6 +5,6 @@ export const encryptPassword = async (password: string): Promise<string> => {
   return bcrypt.hash(password, salt);
 }
 
-export const validatePassword = async (password: string) : Promise<boolean> =>{
-  return await bcrypt.compare(password, password);
+export const validatePassword = async (password1: string, password:string ) : Promise<boolean> =>{
+  return await bcrypt.compare(password1, password);
 }

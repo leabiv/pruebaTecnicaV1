@@ -15,10 +15,18 @@ export class AuthService{
     this.pool = pool
   }
 
-  async findOneSocio(correo: string, contrasena: string) {
-    const query = await this.pool.query("SELECT * FROM socios WHERE correo = $1 AND contrasena = $2", [correo, contrasena]);
+  async findOneSocio(correo: string) {
+    const query = await this.pool.query("SELECT * FROM socios WHERE correo = $1", [correo]);
     if (query.rowCount == 0) {
-      throw new Error('Invalido email / contraseña ')
+      throw new Error('Invalido email')
+    }
+    return query.rows;
+  }
+
+  async findOneSocio1(id: number) {
+    const query = await this.pool.query("SELECT * FROM socios WHERE id = $1", [id]);
+    if (query.rowCount == 0) {
+      throw new Error('Invalido id socio')
     }
     return query.rows;
   }
