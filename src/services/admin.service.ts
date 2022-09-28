@@ -5,6 +5,7 @@ import { Socios } from '../modules/socios.models';
 import { User } from '../modules/users.models';
 import { Vehiculo } from '../modules/vehiculo.models';
 import { encryptPassword } from '../modules/encrypt.models';
+import { Historial } from '../modules/historial.models';
 
 export class AdminService {
 
@@ -18,7 +19,7 @@ export class AdminService {
     this.socios = [];
     this.clientes = [];
     //this.generate(); permite generar un administrador cada vez que se reinicie la maquina
-    this.generate();
+    //this.generate();
     this.pool = pool
   }
 
@@ -26,9 +27,9 @@ export class AdminService {
     //const correo = "admin@gmail.com";
     //const query = await this.pool.query("select * from administradores where correo = $1",[correo]);
     //if(query.rowCount==0){
-      const hash = await encryptPassword('admin');
-      const query1 = "INSERT INTO administradores (nombre, correo, contrasena, rol) VALUES ('adminparking','admin@gmail.com',$1,'admin')";
-      const result1 = await this.pool.query(query1, [hash]);
+    const hash = await encryptPassword('admin');
+    const query1 = "INSERT INTO administradores (nombre, correo, contrasena, rol) VALUES ('adminparking','admin@gmail.com',$1,'admin')";
+    const result1 = await this.pool.query(query1, [hash]);
     //}
 
   }
@@ -55,7 +56,7 @@ export class AdminService {
    */
   async createUser(data: User) {
     const { rol, correo } = data;
-    const buscarCorreo = await this.pool.query("SELECT * FROM (SELECT * FROM socios union SELECT * FROM clientes) sociosclientes WHERE correo =$1",[correo]);
+    const buscarCorreo = await this.pool.query("SELECT * FROM (SELECT * FROM socios union SELECT * FROM clientes) sociosclientes WHERE correo =$1", [correo]);
     if (buscarCorreo.rowCount == 0) {
       if (rol == 'socio') {
         const query = "INSERT INTO socios (nombre, correo, contrasena, rol) VALUES ($1, $2, $3, $4)";
@@ -219,6 +220,20 @@ export class AdminService {
       throw new Error('El socio no tiene ningun cliente asociado')
     }
     return result.rows;
+  }
+
+  /**
+   * Funcion que permite listado del historial de vehículos por un parqueadero
+   * @param idParking : number
+   * @param hist : Object Historial
+   * @returns : QueryResult
+   */
+  async listHistoriVehiculo(idParking: number, hist: Historial) {
+    const query = await this.pool.query("SELECT h.placa FROM parqueadero as p JOIN historial as h ON p.id = h.id_parking where h.id_parking = $1  AND h.placa ILIKE '"+hist.placa+"%' AND h.fechaingreso < $2", [idParking, hist.fechasalida]);
+    if (query.rowCount == 0) {
+      throw new Error('No hay vehiculos')
+    }
+    return query.rows;
   }
 }
 

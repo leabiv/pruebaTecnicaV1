@@ -144,4 +144,15 @@ router.get('/socio/:id/user', TokenValidation, validarRolTokenAdmin, async (req,
   }
 });
 
+router.get('/history/parking/:id', TokenValidation, validarRolTokenAdmin, async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const body = req.body;
+    const historial = await service.listHistoriVehiculo(Number(id), body)
+    res.status(200).json(historial)
+  } catch (error: any) {
+    next(res.status(400).json({ message: error.message }))
+  }
+})
+//TokenValidation, validarRolTokenAdmin,
 export default router;

@@ -31,6 +31,11 @@ export class ClienteService {
     } else if (Number(cantVehiculo.rows[0].count) > caparking.rows[0].capacidad) {
       throw new Error("No se puede Registrar Ingreso, Capacidad Maxima");
     }
+
+    const letrasValido = "/^[a-zA-Z]+(\s*[a-zA-Z]*)*[a-zA-Z]+$/"
+    if(letrasValido.match(dataVehiculo.placa)==null){
+      throw new Error("No se admiten ciertas expresiones");
+    }
     const query = "INSERT INTO vehiculo (nombre, placa, fechaingreso, id_parqueadero, id_cliente) VALUES ($1, $2, $3, $4, $5)";
     const result1 = await this.pool.query(query, [dataVehiculo.nombre, dataVehiculo.placa, dataVehiculo.fechaingreso, dataVehiculo.id_parking, dataVehiculo.id_cliente]);
     return result1.rowCount;
