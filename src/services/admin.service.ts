@@ -19,7 +19,7 @@ export class AdminService {
     this.socios = [];
     this.clientes = [];
     //this.generate(); permite generar un administrador cada vez que se reinicie la maquina
-    //this.generate();
+    this.generate();
     this.pool = pool
   }
 
